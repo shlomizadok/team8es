@@ -5,6 +5,12 @@
 # is restricted to this project.
 use Mix.Config
 
+defmodule Team8esSecretKey do
+  def fetch do
+    System.get_env("SECRET_KEY_PASSPHRASE") |> JOSE.JWK.from_file("team8es_secret")
+  end
+end
+
 # General application configuration
 config :team8es,
   ecto_repos: [Team8es.Repo]
@@ -21,6 +27,13 @@ config :team8es, Team8es.Endpoint,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
+
+config :guardian, Guardian,
+  issuer: "Team8es",
+  ttl: { 30, :days },
+  allowed_drift: 2000,
+  secret_key: {Team8esSecretKey, :fetch},
+  serializer: Team8es.GuardianSerializer
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
