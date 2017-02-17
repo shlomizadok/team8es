@@ -7,7 +7,7 @@ use Mix.Config
 
 defmodule Team8esSecretKey do
   def fetch do
-    System.get_env("SECRET_KEY_PASSPHRASE") |> JOSE.JWK.from_file("team8es_secret")
+    File.read! System.cwd() <> "/config/team8es_secret"
   end
 end
 
@@ -29,6 +29,9 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :guardian, Guardian,
+  allowed_algos: ["HS512"],
+  verify_module: Guardian.JWT,
+  verify_issuer: true,
   issuer: "Team8es",
   ttl: { 30, :days },
   allowed_drift: 2000,
