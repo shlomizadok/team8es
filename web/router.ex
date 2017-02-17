@@ -21,14 +21,13 @@ defmodule Team8es.Router do
 
   scope "/", Team8es do
     pipe_through :browser
+    get "/", PageController, :index
     resources "/users", UserController, only: [:new, :create]
     resources "/sessions",SessionController, only: [:new, :create, :delete]
   end
 
   scope "/", Team8es do
     pipe_through [:browser, :browser_auth]
-
-    get "/", PageController, :index
     resources "/users", UserController
   end
 
