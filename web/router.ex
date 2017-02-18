@@ -9,10 +9,13 @@ defmodule Team8es.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :browser_auth do
+  pipeline :browser_session do
     plug Guardian.Plug.VerifySession
-    plug Guardian.Plug.EnsureAuthenticated, handler: Team8es.Token
     plug Guardian.Plug.LoadResource
+  end
+
+  pipeline :require_login do
+     plug Guardian.Plug.EnsureAuthenticated, handler: Team8es.Token
   end
 
   pipeline :api do
@@ -20,14 +23,14 @@ defmodule Team8es.Router do
   end
 
   scope "/", Team8es do
-    pipe_through :browser
-    get "/", PageController, :index
+    pipe_through [:browser, :browser_session]
     resources "/users", UserController, only: [:new, :create]
     resources "/sessions",SessionController, only: [:new, :create, :delete]
+    get "/", PageController, :index
   end
 
   scope "/", Team8es do
-    pipe_through [:browser, :browser_auth]
+    pipe_through [:browser, :browser_session, :require_login]
     resources "/users", UserController
   end
 

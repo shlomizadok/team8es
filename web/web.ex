@@ -52,6 +52,7 @@ defmodule Team8es.Web do
       import Team8es.Router.Helpers
       import Team8es.ErrorHelpers
       import Team8es.Gettext
+      import Team8es.ViewHelper
     end
   end
 

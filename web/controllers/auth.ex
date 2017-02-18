@@ -7,7 +7,7 @@ defmodule Team8es.Auth do
   def login(conn, user) do
     Logger.debug user.email
     conn
-    |> Guardian.Plug.sign_in(user)
+    |> Guardian.Plug.sign_in(user, :access)
   end
 
   def login_by_email_and_pass(conn, email, given_pass, opts) do
