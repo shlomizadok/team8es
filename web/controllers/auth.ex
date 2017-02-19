@@ -5,7 +5,6 @@ defmodule Team8es.Auth do
 
 
   def login(conn, user) do
-    Logger.debug user.email
     conn
     |> Guardian.Plug.sign_in(user, :access)
   end
@@ -16,7 +15,6 @@ defmodule Team8es.Auth do
 
     cond do
       user && checkpw(given_pass, user.password_hash) ->
-        Logger.warn checkpw(given_pass, user.password_hash)
         {:ok, login(conn, user)}
       user ->
         {:error, :unauthorized, conn}

@@ -13,7 +13,7 @@ defmodule Team8es.SessionController do
           |> redirect(to: user_path(conn, :index))
         {:error, _reason, conn} ->
           conn
-          |> put_flash(:error, "Wrong username/password")
+          |> put_flash(:error, "Wrong email/password combination")
           |> render("new.html")
        end
     end
