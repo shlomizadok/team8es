@@ -1,5 +1,6 @@
 defmodule Team8es.UserController do
   use Team8es.Web, :controller
+  import Team8es.ViewHelper
 
   alias Team8es.User
 
@@ -9,6 +10,12 @@ defmodule Team8es.UserController do
   end
 
   def new(conn, _params) do
+    if current_user(conn) do
+      conn
+      |> put_flash(:info, "User already exists")
+      |> redirect(to: user_path(conn, :index))
+    end
+
     changeset = User.changeset(%User{})
     render(conn, "new.html", changeset: changeset)
   end

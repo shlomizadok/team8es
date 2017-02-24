@@ -10,6 +10,9 @@ defmodule Team8es.User do
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
 
+    # Relationships
+    has_one :group, Team8es.Group
+
     timestamps()
   end
 

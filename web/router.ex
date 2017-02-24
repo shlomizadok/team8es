@@ -32,10 +32,6 @@ defmodule Team8es.Router do
   scope "/", Team8es do
     pipe_through [:browser, :browser_session, :require_login]
     resources "/users", UserController
+    resources "/groups", GroupController
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", Team8es do
-  #   pipe_through :api
-  # end
 end
