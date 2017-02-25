@@ -1,6 +1,5 @@
 defmodule Team8es.UserController do
   use Team8es.Web, :controller
-  import Team8es.ViewHelper
 
   alias Team8es.User
 
@@ -34,7 +33,7 @@ defmodule Team8es.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    user = Repo.get!(User, id) |> Repo.preload(:group)
     render(conn, "show.html", user: user)
   end
 

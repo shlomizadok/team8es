@@ -19,7 +19,7 @@
 
   <li>
     <strong>User:</strong>
-    <%= @group.user_id %>
+    <%= @group.user.email %>
   </li>
 
 </ul>

@@ -8,13 +8,8 @@
   </li>
 
   <li>
-    <strong>Password:</strong>
-    <%= @user.password %>
-  </li>
-
-  <li>
-    <strong>Password confirmation:</strong>
-    <%= @user.password_confirmation %>
+    <strong>Group name:</strong>
+    <%= @user.group.name %>
   </li>
 
 </ul>

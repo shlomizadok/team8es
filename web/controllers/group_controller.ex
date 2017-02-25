@@ -14,7 +14,7 @@ defmodule Team8es.GroupController do
   end
 
   def create(conn, %{"group" => group_params}) do
-    changeset = Group.changeset(%Group{}, group_params)
+    changeset = Group.changeset(%Group{user_id: current_user(conn).id}, group_params)
 
     case Repo.insert(changeset) do
       {:ok, _group} ->
@@ -27,7 +27,7 @@ defmodule Team8es.GroupController do
   end
 
   def show(conn, %{"id" => id}) do
-    group = Repo.get!(Group, id)
+    group = Repo.get!(Group, id) |> Repo.preload(:user)
     render(conn, "show.html", group: group)
   end
 

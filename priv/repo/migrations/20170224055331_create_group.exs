@@ -10,7 +10,7 @@ defmodule Team8es.Repo.Migrations.CreateGroup do
 
       timestamps()
     end
-    create index(:groups, [:user_id])
+    create unique_index(:groups, [:user_id])
 
   end
 end
