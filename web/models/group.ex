@@ -5,6 +5,8 @@ defmodule Team8es.Group do
     field :name, :string
     field :description, :string
     field :mailing_list_email, :string
+    field :access_token, :binary
+    field :uuid, :string
     belongs_to :user, Team8es.User
 
     timestamps()

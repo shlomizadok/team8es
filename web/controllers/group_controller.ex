@@ -14,7 +14,9 @@ defmodule Team8es.GroupController do
   end
 
   def create(conn, %{"group" => group_params}) do
-    changeset = Group.changeset(%Group{user_id: current_user(conn).id}, group_params)
+    changeset = Group.changeset(%Group{user_id: current_user(conn).id,
+                                       uuid: Ecto.UUID.generate(),
+                                       access_token: generate_access_token(20)}, group_params)
 
     case Repo.insert(changeset) do
       {:ok, _group} ->
@@ -61,5 +63,9 @@ defmodule Team8es.GroupController do
     conn
     |> put_flash(:info, "Group deleted successfully.")
     |> redirect(to: group_path(conn, :index))
+  end
+
+  defp generate_access_token(length = 20) do
+    :crypto.strong_rand_bytes(length) |> Base.url_encode64 |> binary_part(0, length)
   end
 end
